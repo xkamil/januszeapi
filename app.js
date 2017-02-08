@@ -50,7 +50,7 @@ router.post('/users', function (req, res) {
         if(err){
             res.status(err).json();
         }else{
-            res.status(200).json(user);
+            res.status(201).json(user);
         }
     });
 });
