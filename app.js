@@ -10,7 +10,7 @@ mongoose.connect('mongodb://janusz:mietek@ds145009.mlab.com:45009/users');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 8080;        // set our port
+var port = process.env.PORT || 8083;        // set our port
 var router = express.Router();              // get an instance of the express Router
 
 
@@ -50,47 +50,6 @@ router.post('/users', function (req, res) {
         }
     });
 });
-
-
-
-// router.get('/login', function (req, res) {
-//     var login = req.query.login;
-//     var password = req.query.password;
-//
-//     User.findOne({"login": login, "password": SHA256(password).toString()},'_id',function (err, usr) {
-//         if(err){
-//             res.status(403).json();
-//         }
-//         console.log(Date.now());
-//         console.log(SHA256(Date.now()).toString());
-//         if(usr){
-//             console.log('dupa');
-//             var apikey = new ApiKey();
-//             apikey.user_id = usr._id;
-//             apikey.key = SHA256(Date.now()).toString();
-//             apikey.save();
-//            
-//             res.status(200).json({
-//                 key: apikey.key
-//             });
-//         }else{
-//             res.status(403).json();
-//         }
-//     });
-// });
-//
-//
-// router.get('/', function (req, res) {
-//     var key = req.header('apikey');
-//     console.log('ApiKey:' + key);
-//
-//     var userId = getUserIdByApiKey(key);
-//
-//     if(userId){
-//         res.status(200).json();
-//     }
-//     res.status(403).json();
-// });
 
 app.use('/api', router);
 
