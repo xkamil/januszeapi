@@ -10,9 +10,8 @@ var User = require('./model/user');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 8080;        // set our port
+var port =  8080;        // set our port
 var router = express.Router();              // get an instance of the express Router
-
 
 router.get('/test', function (req, res) {
     res.status(200).json({message: "APP WORKS!"});
