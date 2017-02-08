@@ -1,11 +1,11 @@
 var User = require('../model/user');
-var HttpCode = require('../http_code');
+var HttpCode = require('../http_codes');
 var mongoose = require('mongoose');
 var SHA256 = require("crypto-js/sha256");
 
 var UsersRepository = {};
 
-UsersRepository.getUser = function (id, callback) {
+UsersRepository.getUserById = function (id, callback) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
         callback(HttpCode.HTTP_NOT_FOUND, null);
     } else {
@@ -19,6 +19,34 @@ UsersRepository.getUser = function (id, callback) {
             }
         })
     }
+};
+
+UsersRepository.getUser = function (login, password, callback) {
+
+    User.findOne({"login": login.toString(), "password": password.toString()}, function (err, user) {
+        if (err) {
+            callback(HttpCode.HTTP_INTERNAL_ERROR, null);
+        } else if (user) {
+            callback(null, user);
+        } else {
+            callback(HttpCode.HTTP_NOT_FOUND, null);
+        }
+    })
+
+};
+
+UsersRepository.getUserByLogin = function (login, callback) {
+
+    User.findOne({"login": login}, function (err, user) {
+        if (err) {
+            callback(HttpCode.HTTP_INTERNAL_ERROR, null);
+        } else if (user) {
+            callback(null, user);
+        } else {
+            callback(HttpCode.HTTP_NOT_FOUND, null);
+        }
+    })
+
 };
 
 UsersRepository.getUsers = function (callback) {
@@ -35,7 +63,7 @@ UsersRepository.getUsers = function (callback) {
 };
 
 UsersRepository.addUser = function (user, callback) {
-    if (!(user instanceof User) || !user.validate()) {
+    if (!(user instanceof User) || !user.isValid()) {
         callback(HttpCode.HTTP_BAD_REQUEST, null);
     } else {
         User.findOne({login: user.login}, function (err, foundUser) {

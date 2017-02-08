@@ -1,13 +1,13 @@
 var express = require('express');
 var UsersRepository = require('../repository/users_repository');
-var HttpCode = require('../http_code');
+var HttpCode = require('../http_codes');
 var User = require('../model/user');
 var router = express.Router();
 
 router.get('/users/:id', function (req, res) {
     var id = req.params.id;
 
-    UsersRepository.getUser(id, function (err, user) {
+    UsersRepository.getUserById(id, function (err, user) {
         if(err){
             res.status(err).json();
         }else{
