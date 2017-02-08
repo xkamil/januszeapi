@@ -10,7 +10,7 @@ mongoose.connect('mongodb://janusz:mietek@ds145009.mlab.com:45009/users');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 80;        // set our port
+var port = process.env.PORT || 8080;        // set our port
 var router = express.Router();              // get an instance of the express Router
 
 
