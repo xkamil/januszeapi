@@ -18,7 +18,7 @@ router.get('/test', function (req, res) {
 });
 
 
-router.get('/user/:id', function (req, res) {
+router.get('/users/:id', function (req, res) {
     var id = req.params.id;
 
     UsersRepository.getUser(id, function (err, user) {
