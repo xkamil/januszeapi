@@ -14,6 +14,11 @@ var port = process.env.PORT || 8080;        // set our port
 var router = express.Router();              // get an instance of the express Router
 
 
+router.get('/test', function (req, res) {
+    res.status(200).json({message: "APP WORKS!"});
+});
+
+
 router.get('/user/:id', function (req, res) {
     var id = req.params.id;
 
