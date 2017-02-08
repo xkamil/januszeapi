@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var UsersRepository = require('./repository/users_repository');
 var User = require('./model/user');
 
-mongoose.connect('mongodb://janusz:mietek@ds145009.mlab.com:45009/users');
+//mongoose.connect('mongodb://janusz:mietek@ds145009.mlab.com:45009/users');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
