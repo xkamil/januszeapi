@@ -17,4 +17,4 @@ var usersRouter = require('./routes/users');
 app.use('/api', usersRouter);
 app.use('/api', authRouter);
 
-app.listen(config[env].app.port);
+app.listen(process.env.PORT || config[env].app.port);
