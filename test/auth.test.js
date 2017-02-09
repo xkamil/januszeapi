@@ -4,8 +4,9 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 var config = require('../config.json');
 chai.use(chaiHttp);
+var env = 'test';
 
-var baseUrl = config.test.app.host + ":" + config.test.app.port;
+var baseUrl = config[env].app.host + ":" + config[env].app.port;
 
 describe('Api Request ', function () {
     describe('POST /register', function () {
