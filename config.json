@@ -1,0 +1,16 @@
+{
+  "prod": {
+    "db": "mongodb://janusz:mietek@ds145009.mlab.com:45009/users",
+    "app":{
+      "host": "",
+      "port": 8080
+    }
+  },
+  "test": {
+    "db": "mongodb://localhost:27017/test",
+    "app":{
+      "host": "http://localhost",
+      "port": 8080
+    }
+  }
+}

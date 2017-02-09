@@ -1,63 +1,20 @@
-# Rutki:
+# Januszeapi:
 
 
-Host: https://januszeapi.herokuapp.com/api/
+Host: https://januszeapi.herokuapp.com/
 
-### **GET** /users
+Link do dokumentacji api - do zaimportowania w postmanie:
 
-Response codes:
-```
-200 - OK
-500 - INTERNAL SEVER ERROR
-```
+https://www.getpostman.com/collections/60013d163dbea5086056
 
-Response body:
-```
-[
-    {
-        _id: String,
-        password: String,
-        login: String
-        created: String
-    }
-]
-```
+**POST** /api/register
 
-### **GET** /users/{id}
+**POST** /api/login
 
-Response codes:
-```
-200 - OK
-404 - USER NOT FOUND
-500 - INTERNAL SEVER ERROR
-```
 
-Response body:
-```
-{
-    _id: String,
-    password: String,
-    login: String
-    created: String
-}
-```
+#Testy
 
-### **POST** /users
-
-Response codes:
-```
-200 - USER CREATED
-400 - VALIDATION ERRORS
-409 - USER ALREDY EXISTS
-500 - INTERNAL SEVER ERROR
-```
-
-Response body:
-```
-{
-    _id: String,
-    password: String,
-    login: String
-    created: String
-}
-```
+1. Run mongo and create database test
+2. Change db connection info in config.json if needed
+3. Run `npm run start-test`
+4. Run `npm run mocha`
