@@ -15,7 +15,7 @@ describe('Api Request ', function () {
 
             chai.request(baseUrl)
                 .post('/api/register')
-                .set('Content-Type', 'application/x-www-form-urlencoded; charset=utf8')
+                .set('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8')
                 .send({login: login, password: login})
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
@@ -29,7 +29,7 @@ describe('Api Request ', function () {
 
             chai.request(baseUrl)
                 .post('/api/register')
-                .set('Content-Type', 'application/x-www-form-urlencoded; charset=utf8')
+                .set('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8')
                 .send({login: login, password: login})
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
@@ -37,7 +37,7 @@ describe('Api Request ', function () {
 
                     chai.request(baseUrl)
                         .post('/api/register')
-                        .set('Content-Type', 'application/x-www-form-urlencoded; charset=utf8')
+                        .set('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8')
                         .send({login: login, password: login})
                         .end(function (err, res) {
                             expect(res).to.have.status(409);
@@ -50,7 +50,7 @@ describe('Api Request ', function () {
         it('should return status 400 if login is too short', function (done) {
             chai.request(baseUrl)
                 .post('/api/register')
-                .set('Content-Type', 'application/x-www-form-urlencoded; charset=utf8')
+                .set('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8')
                 .send({login: 'sh', password: 'asdfasgasdf'})
                 .end(function (err, res) {
                     expect(res).to.have.status(400);
@@ -64,7 +64,7 @@ describe('Api Request ', function () {
 
             chai.request(baseUrl)
                 .post('/api/register')
-                .set('Content-Type', 'application/x-www-form-urlencoded; charset=utf8')
+                .set('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8')
                 .send({login: login, password: 'fd'})
                 .end(function (err, res) {
                     expect(res).to.have.status(400);
@@ -76,7 +76,7 @@ describe('Api Request ', function () {
         it('should return status 400 if password or login are not included in request', function (done) {
             chai.request(baseUrl)
                 .post('/api/register')
-                .set('Content-Type', 'application/x-www-form-urlencoded; charset=utf8')
+                .set('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8')
                 .end(function (err, res) {
                     expect(res).to.have.status(400);
                     expect(res.body).not.to.include.keys('key');
@@ -94,7 +94,7 @@ describe('Api Request ', function () {
 
             chai.request(baseUrl)
                 .post('/api/register')
-                .set('Content-Type', 'application/x-www-form-urlencoded; charset=utf8')
+                .set('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8')
                 .send({login: login, password: password})
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
@@ -102,7 +102,7 @@ describe('Api Request ', function () {
 
                     chai.request(baseUrl)
                         .post('/api/login')
-                        .set('Content-Type', 'application/x-www-form-urlencoded; charset=utf8')
+                        .set('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8')
                         .send({login: login, password: password})
                         .end(function (err, res) {
                             expect(res).to.have.status(200);
@@ -118,7 +118,7 @@ describe('Api Request ', function () {
 
             chai.request(baseUrl)
                 .post('/api/login')
-                .set('Content-Type', 'application/x-www-form-urlencoded; charset=utf8')
+                .set('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8')
                 .send({login: login, password: password})
                 .end(function (err, res) {
                     expect(res).to.have.status(404);
@@ -130,7 +130,7 @@ describe('Api Request ', function () {
         it('should return status 404 if login or passord are not included in request', function (done) {
             chai.request(baseUrl)
                 .post('/api/login')
-                .set('Content-Type', 'application/x-www-form-urlencoded; charset=utf8')
+                .set('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8')
                 .end(function (err, res) {
                     expect(res).to.have.status(404);
                     expect(res.body).not.to.include.keys('key');
