@@ -16,7 +16,7 @@ router.post('/register', function (req, res) {
         return;
     }
 
-    UsersRepository.getUserByLogin(user.login, function (err, usr) {
+    UsersRepository.getUser({login: user.login}, function (err, usr) {
         if (err && err != HttpCode.HTTP_NOT_FOUND) {
             res.status(HttpCode.HTTP_INTERNAL_ERROR).json(err);
         } else if (usr) {
@@ -39,19 +39,22 @@ router.post('/register', function (req, res) {
 });
 
 router.post('/login', function (req, res) {
-    var login = req.body.login;
-    var password = SHA256(req.body.password);
+    var user = new User();
+    user.login = req.body.login;
+    user.password = SHA256(req.body.password);
 
-    if (!login || !req.body.password) {
+    if (!req.body.login || !req.body.password) {
+        console.log(req.body.login);
+        console.log(req.body.password);
         res.status(HttpCode.HTTP_NOT_FOUND).json();
         return;
     }
 
-    UsersRepository.getUser(login, password, function (err, user) {
+    UsersRepository.getUser(user, function (err, usr) {
         if (err) {
             res.status(err).json();
-        } else if (user) {
-            ApiKeyRepository.addApiKey(user._id, function (err, key) {
+        } else if (usr) {
+            ApiKeyRepository.addApiKey(usr._id, function (err, key) {
                 if (err) {
                     res.status(HttpCode.HTTP_INTERNAL_ERROR)
                 } else if (key) {
