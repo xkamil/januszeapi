@@ -13,7 +13,7 @@ router.get('/users/:id', function (req, res) {
         }else{
             res.status(HttpCode.HTTP_OK).json(user);
         }
-    });
+    }); 
 });
 
 router.get('/users', function (req, res) {
