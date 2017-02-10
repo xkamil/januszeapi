@@ -5,39 +5,9 @@ var SHA256 = require("crypto-js/sha256");
 
 var UsersRepository = {};
 
-UsersRepository.getUserById = function (id, callback) {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        callback(HttpCode.HTTP_NOT_FOUND, null);
-    } else {
-        User.findById(id, function (err, user) {
-            if (err) {
-                callback(HttpCode.HTTP_INTERNAL_ERROR, null);
-            } else if (user) {
-                callback(null, user);
-            } else {
-                callback(HttpCode.HTTP_NOT_FOUND, null);
-            }
-        })
-    }
-};
+UsersRepository.getUser = function (user, callback) {
 
-UsersRepository.getUser = function (login, password, callback) {
-
-    User.findOne({"login": login.toString(), "password": password.toString()}, function (err, user) {
-        if (err) {
-            callback(HttpCode.HTTP_INTERNAL_ERROR, null);
-        } else if (user) {
-            callback(null, user);
-        } else {
-            callback(HttpCode.HTTP_NOT_FOUND, null);
-        }
-    })
-
-};
-
-UsersRepository.getUserByLogin = function (login, callback) {
-
-    User.findOne({"login": login}, function (err, user) {
+    User.findOne(user , function (err, user) {
         if (err) {
             callback(HttpCode.HTTP_INTERNAL_ERROR, null);
         } else if (user) {
@@ -63,6 +33,7 @@ UsersRepository.getUsers = function (callback) {
 };
 
 UsersRepository.addUser = function (user, callback) {
+    
     if (!(user instanceof User) || !user.isValid()) {
         callback(HttpCode.HTTP_BAD_REQUEST, null);
     } else {
