@@ -1,4 +1,4 @@
-var faker = require('Faker');
+var faker = require('faker');
 var expect = require('chai').expect;
 var chai = require('chai');
 var chaiHttp = require('chai-http');
@@ -11,7 +11,7 @@ var baseUrl = config[env].app.host + ":" + config[env].app.port;
 describe('Api Request ', function () {
     describe('POST /register', function () {
         it('should return status 200', function (done) {
-            var login = faker.Name.firstName() + '34562';
+            var login = faker.name.firstName() + '34562';
 
             chai.request(baseUrl)
                 .post('/api/register')
@@ -25,7 +25,7 @@ describe('Api Request ', function () {
         });
 
         it('should return status 409 if login is alredy taken', function (done) {
-            var login = faker.Name.firstName() + '34562';
+            var login = faker.name.firstName() + '34562';
 
             chai.request(baseUrl)
                 .post('/api/register')
@@ -60,7 +60,7 @@ describe('Api Request ', function () {
         });
 
         it('should return status 400 if password is too short', function (done) {
-            var login = faker.Name.firstName() + '34562';
+            var login = faker.name.firstName() + '34562';
 
             chai.request(baseUrl)
                 .post('/api/register')
@@ -89,7 +89,7 @@ describe('Api Request ', function () {
     describe('POST /login', function () {
 
         it('should return status 200', function (done) {
-            var login = faker.Name.firstName() + '34562';
+            var login = faker.name.firstName() + '34562';
             var password = 'dupadupa999';
 
             chai.request(baseUrl)
@@ -113,7 +113,7 @@ describe('Api Request ', function () {
         });
 
         it('should return status 404 if user with specified login not exists', function (done) {
-            var login = faker.Name.firstName() + '34562';
+            var login = faker.name.firstName() + '34562';
             var password = 'dupadupa999';
 
             chai.request(baseUrl)
