@@ -6,12 +6,12 @@ var SHA256 = require("crypto-js/sha256");
 var UsersRepository = {};
 
 UsersRepository.getUser = function (user, callback) {
-
-    User.findOne(user , function (err, user) {
+    
+    User.findOne(user , function (err, usr) {
         if (err) {
             callback(HttpCode.HTTP_INTERNAL_ERROR, null);
-        } else if (user) {
-            callback(null, user);
+        } else if (usr) {
+            callback(null, usr);
         } else {
             callback(HttpCode.HTTP_NOT_FOUND, null);
         }

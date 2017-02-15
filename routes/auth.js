@@ -11,7 +11,7 @@ router.post('/register', function (req, res) {
     user.login = req.body.login;
     user.password = req.body.password;
 
-    if (!user.isValid()) {
+    if (!User.isValid(user)) {
         res.status(HttpCode.HTTP_BAD_REQUEST).json();
         return;
     }
@@ -35,25 +35,25 @@ router.post('/register', function (req, res) {
             });
         }
     });
-
 });
 
 router.post('/login', function (req, res) {
-    var user = new User();
-    user.login = req.body.login;
-    user.password = SHA256(req.body.password);
-
     if (!req.body.login || !req.body.password) {
-        console.log(req.body.login);
-        console.log(req.body.password);
         res.status(HttpCode.HTTP_NOT_FOUND).json();
         return;
     }
 
+    var user = {
+        login: req.body.login,
+        password: SHA256(req.body.password).toString()
+    };
+
     UsersRepository.getUser(user, function (err, usr) {
         if (err) {
+            console.log(err);
             res.status(err).json();
         } else if (usr) {
+            console.log('ccc');
             ApiKeyRepository.addApiKey(usr._id, function (err, key) {
                 if (err) {
                     res.status(HttpCode.HTTP_INTERNAL_ERROR)
