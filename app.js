@@ -12,8 +12,12 @@ app.use(bodyParser.json());
 
 
 var authRouter = require('./routes/auth');
+var authMidRouter = require('./routes/auth_mid');
 var usersRouter = require('./routes/users');
+var conversationRouter = require('./routes/conversation');
 
+app.use('/api', authMidRouter);
+app.use('/api', conversationRouter);
 app.use('/api', usersRouter);
 app.use('/api', authRouter);
 

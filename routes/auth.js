@@ -1,10 +1,9 @@
 var express = require('express');
 var SHA256 = require("crypto-js/sha256");
-var UsersRepository = require('../repository/users_repository');
 var HttpCode = require('../http_codes');
 var User = require('../model/user');
-var ApiKeyRepository = require('../repository/api_key_repository');
 var router = express.Router();
+var ApiKey = require('../model/api_key');
 
 router.post('/register', function (req, res) {
     var user = new User();
@@ -16,55 +15,51 @@ router.post('/register', function (req, res) {
         return;
     }
 
-    UsersRepository.getUserByLogin(user.login, function (err, usr) {
-        if (err && err != HttpCode.HTTP_NOT_FOUND) {
+    User.findOne({login: user.login}, function (err, usr) {
+        if (err) {
             res.status(HttpCode.HTTP_INTERNAL_ERROR).json(err);
         } else if (usr) {
             res.status(HttpCode.HTTP_CONFLICT).json();
         } else {
-            user.password = SHA256(user.password);
-            user.save();
-            ApiKeyRepository.addApiKey(user._id, function (err, key) {
+            user.password = SHA256(user.password).toString();
+            user.save(function (err) {
                 if (err) {
-                    res.status(HttpCode.HTTP_INTERNAL_ERROR)
-                } else if (key) {
-                    res.status(HttpCode.HTTP_OK).json(key);
+                    res.status(HttpCode.HTTP_INTERNAL_ERROR).json();
                 } else {
-                    res.status(HttpCode.HTTP_INTERNAL_ERROR)
+                    var apikey = new ApiKey();
+                    apikey.user_id = user._id;
+                    apikey.key = SHA256(user._id + Math.random()).toString();
+                    apikey.save();
+
+                    res.status(HttpCode.HTTP_OK).json({key: apikey.key, id: user._id});
                 }
             });
         }
     });
-
 });
 
 router.post('/login', function (req, res) {
-    var login = req.body.login;
-    var password = SHA256(req.body.password);
+    var login = req.body.login || '';
+    var password = SHA256(req.body.password).toString() || '';
 
-    if (!login || !req.body.password) {
-        res.status(HttpCode.HTTP_NOT_FOUND).json();
-        return;
-    }
-
-    UsersRepository.getUser(login, password, function (err, user) {
+    User.findOne({"login": login, "password": password}, function (err, user) {
         if (err) {
-            res.status(err).json();
+            res.status(HttpCode.HTTP_INTERNAL_ERROR).json();
         } else if (user) {
-            ApiKeyRepository.addApiKey(user._id, function (err, key) {
+            var apikey = new ApiKey();
+            apikey.user_id = user._id;
+            apikey.key = SHA256(user._id + Math.random());
+            apikey.save(function (err) {
                 if (err) {
-                    res.status(HttpCode.HTTP_INTERNAL_ERROR)
-                } else if (key) {
-                    res.status(HttpCode.HTTP_OK).json(key);
+                    res.status(HttpCode.HTTP_INTERNAL_ERROR).json();
                 } else {
-                    res.status(HttpCode.HTTP_INTERNAL_ERROR)
+                    res.status(HttpCode.HTTP_OK).json({key: apikey.key});
                 }
-            })
+            });
         } else {
             res.status(HttpCode.HTTP_NOT_FOUND).json();
         }
     });
-
 });
 
 module.exports = router;
