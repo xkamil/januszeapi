@@ -10,7 +10,7 @@ router.post('/register', function (req, res) {
     user.login = req.body.login;
     user.password = req.body.password;
 
-    if (!user.isValid()) {
+    if (!User.isValid(user)) {
         res.status(HttpCode.HTTP_BAD_REQUEST).json();
         return;
     }

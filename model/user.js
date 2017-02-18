@@ -10,10 +10,10 @@ var UserSchema = new Schema({
 
 var User = mongoose.model('User', UserSchema);
 
-User.prototype.isValid = function () {
-    if (!this.login || this.login.trim().length < 3) {
+User.isValid = function (user) {
+    if (!user.login || user.login.trim().length < 3) {
         return false;
-    } else if (!this.password || this.password.trim().length < 3) {
+    } else if (!user.password || user.password.trim().length < 3) {
         return false;
     }
     return true;

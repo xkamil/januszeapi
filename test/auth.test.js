@@ -4,7 +4,7 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 var config = require('../config.json');
 chai.use(chaiHttp);
-var env = 'test';
+var env = 'prod';
 
 var baseUrl = config[env].app.host + ":" + config[env].app.port;
 
@@ -15,7 +15,7 @@ describe('Registration && Loggin in', function () {
 
             chai.request(baseUrl)
                 .post('/api/register')
-                .set('Content-Type', 'application/x-www-form-urlencoded')
+                .set('content-type', 'application/x-www-form-urlencoded')
                 .send({login: login, password: login})
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
@@ -30,7 +30,7 @@ describe('Registration && Loggin in', function () {
 
             chai.request(baseUrl)
                 .post('/api/register')
-                .set('Content-Type', 'application/x-www-form-urlencoded')
+                .set('content-type', 'application/x-www-form-urlencoded')
                 .send({login: login, password: login})
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
@@ -39,7 +39,7 @@ describe('Registration && Loggin in', function () {
 
                     chai.request(baseUrl)
                         .post('/api/register')
-                        .set('Content-Type', 'application/x-www-form-urlencoded')
+                        .set('content-type', 'application/x-www-form-urlencoded')
                         .send({login: login, password: login})
                         .end(function (err, res) {
                             expect(res).to.have.status(409);
@@ -52,7 +52,7 @@ describe('Registration && Loggin in', function () {
         it('should return status 400 if login is too short', function (done) {
             chai.request(baseUrl)
                 .post('/api/register')
-                .set('Content-Type', 'application/x-www-form-urlencoded')
+                .set('content-type', 'application/x-www-form-urlencoded')
                 .send({login: 'sh', password: 'asdfasgasdf'})
                 .end(function (err, res) {
                     expect(res).to.have.status(400);
@@ -66,7 +66,7 @@ describe('Registration && Loggin in', function () {
 
             chai.request(baseUrl)
                 .post('/api/register')
-                .set('Content-Type', 'application/x-www-form-urlencoded')
+                .set('content-type', 'application/x-www-form-urlencoded')
                 .send({login: login, password: 'fd'})
                 .end(function (err, res) {
                     expect(res).to.have.status(400);
@@ -78,7 +78,7 @@ describe('Registration && Loggin in', function () {
         it('should return status 400 if password or login are not included in request', function (done) {
             chai.request(baseUrl)
                 .post('/api/register')
-                .set('Content-Type', 'application/x-www-form-urlencoded')
+                .set('content-type', 'application/x-www-form-urlencoded')
                 .end(function (err, res) {
                     expect(res).to.have.status(400);
                     expect(res.body).not.to.include.keys('key');
@@ -96,7 +96,7 @@ describe('Registration && Loggin in', function () {
 
             chai.request(baseUrl)
                 .post('/api/register')
-                .set('Content-Type', 'application/x-www-form-urlencoded')
+                .set('content-type', 'application/x-www-form-urlencoded')
                 .send({login: login, password: password})
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
@@ -104,7 +104,7 @@ describe('Registration && Loggin in', function () {
 
                     chai.request(baseUrl)
                         .post('/api/login')
-                        .set('Content-Type', 'application/x-www-form-urlencoded')
+                        .set('content-type', 'application/x-www-form-urlencoded')
                         .send({login: login, password: password})
                         .end(function (err, res) {
                             expect(res).to.have.status(200);
@@ -120,7 +120,7 @@ describe('Registration && Loggin in', function () {
 
             chai.request(baseUrl)
                 .post('/api/login')
-                .set('Content-Type', 'application/x-www-form-urlencoded')
+                .set('content-type', 'application/x-www-form-urlencoded')
                 .send({login: login, password: password})
                 .end(function (err, res) {
                     expect(res).to.have.status(404);
@@ -132,7 +132,7 @@ describe('Registration && Loggin in', function () {
         it('should return status 404 if login or passord are not included in request', function (done) {
             chai.request(baseUrl)
                 .post('/api/login')
-                .set('Content-Type', 'application/x-www-form-urlencoded')
+                .set('content-type', 'application/x-www-form-urlencoded')
                 .end(function (err, res) {
                     expect(res).to.have.status(404);
                     expect(res.body).not.to.include.keys('key');
