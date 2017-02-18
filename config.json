@@ -2,7 +2,7 @@
   "prod": {
     "db": "mongodb://janusz:mietek@ds145009.mlab.com:45009/users",
     "app":{
-      "host": "https://januszeapi.herokuapp.com",
+      "host": "http://januszeapi.herokuapp.com",
       "port": 80
     }
   },

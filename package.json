@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node app.js prod",
     "start-test": "node app.js test",
-    "test": "jasmine-node ./tests/test.spec.js",
     "mocha": "mocha"
   },
   "author": "",

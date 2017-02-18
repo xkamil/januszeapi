@@ -4,13 +4,14 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 var config = require('../config.json');
 chai.use(chaiHttp);
+var env = 'test';
 
-var baseUrl = config.test.app.host + ":" + config.test.app.port;
+var baseUrl = config[env].app.host + ":" + config[env].app.port;
 
-describe('Api Request ', function () {
+describe('Registration && Loggin in', function () {
     describe('POST /register', function () {
         it('should return status 200', function (done) {
-            var login = faker.Name.firstName() + '34562';
+            var login = faker.Name.firstName() + Math.random();
 
             chai.request(baseUrl)
                 .post('/api/register')
@@ -19,12 +20,13 @@ describe('Api Request ', function () {
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
                     expect(res.body).to.include.keys('key');
+                    expect(res.body).to.include.keys('id');
                     done();
                 });
         });
 
         it('should return status 409 if login is alredy taken', function (done) {
-            var login = faker.Name.firstName() + '34562';
+            var login = faker.Name.firstName() + Math.random();
 
             chai.request(baseUrl)
                 .post('/api/register')
@@ -33,6 +35,7 @@ describe('Api Request ', function () {
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
                     expect(res.body).to.include.keys('key');
+                    expect(res.body).to.include.keys('id');
 
                     chai.request(baseUrl)
                         .post('/api/register')
@@ -59,7 +62,7 @@ describe('Api Request ', function () {
         });
 
         it('should return status 400 if password is too short', function (done) {
-            var login = faker.Name.firstName() + '34562';
+            var login = faker.Name.firstName() + Math.random();
 
             chai.request(baseUrl)
                 .post('/api/register')
@@ -88,8 +91,8 @@ describe('Api Request ', function () {
     describe('POST /login', function () {
 
         it('should return status 200', function (done) {
-            var login = faker.Name.firstName() + '34562';
-            var password = 'dupadupa999';
+            var login = faker.Name.firstName() + Math.random();
+            var password = Math.random();
 
             chai.request(baseUrl)
                 .post('/api/register')
@@ -112,8 +115,8 @@ describe('Api Request ', function () {
         });
 
         it('should return status 404 if user with specified login not exists', function (done) {
-            var login = faker.Name.firstName() + '34562';
-            var password = 'dupadupa999';
+            var login = faker.Name.firstName() + Math.random();
+            var password = Math.random();
 
             chai.request(baseUrl)
                 .post('/api/login')
@@ -137,4 +140,6 @@ describe('Api Request ', function () {
                 });
         });
     });
+
+;
 });
