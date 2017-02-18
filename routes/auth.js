@@ -53,7 +53,7 @@ router.post('/login', function (req, res) {
                 if (err) {
                     res.status(HttpCode.HTTP_INTERNAL_ERROR).json();
                 } else {
-                    res.status(HttpCode.HTTP_OK).json({key: apikey.key});
+                    res.status(HttpCode.HTTP_OK).json({key: apikey.key, id: user._id});
                 }
             });
         } else {
